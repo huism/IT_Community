@@ -7,7 +7,7 @@ target/
 src/main/.DS_Store
 src/main/resources/.DS_Store
 src/main/resources/static/.DS_Store
-
+src/test/*
 ### STS ###
 .apt_generated
 .classpath
