@@ -1,9 +1,11 @@
-package com.huism.community.model;
+package com.huism.community.dto;
 
+import com.huism.community.model.User;
 import lombok.Data;
 
 @Data
-public class Question {
+public class QuestionDTO {
+
     private Integer id;
     private String title;
     private String description;
@@ -14,5 +16,5 @@ public class Question {
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
-
+    private User user;
 }
