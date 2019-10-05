@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -34,6 +35,7 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
                            @RequestParam(name = "state")String state,
+                           HttpServletRequest request,
                            HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(client_id);
@@ -54,6 +56,8 @@ public class AuthorizeController {
             // 每次重新登录都会插入一条相同用户但是token不同的数据
             userMapper.insert(user);
             // 登录成功，写session保存登录状态
+            request.getSession().setAttribute("user",user);
+            // 登录成功，写cookie令牌token自动登录
             response.addCookie(new Cookie("token",token));
             return "redirect:/";
         }else {
