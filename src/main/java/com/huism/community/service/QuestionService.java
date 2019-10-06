@@ -95,4 +95,16 @@ public class QuestionService {
 
         return paginationDTO;
     }
+
+    // 通过问题id查找问题
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.getById(id);
+        User user = userMapper.findById(question.getCreator());
+
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.setUser(user);
+
+        return questionDTO;
+    }
 }

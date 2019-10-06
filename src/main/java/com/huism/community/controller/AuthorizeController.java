@@ -2,9 +2,9 @@ package com.huism.community.controller;
 
 import com.huism.community.dto.AccessTokenDTO;
 import com.huism.community.dto.GithubUser;
-import com.huism.community.mapper.UserMapper;
 import com.huism.community.model.User;
 import com.huism.community.provider.GithubProvider;
+import com.huism.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -30,7 +30,7 @@ public class AuthorizeController {
     private String redirect_uri;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
@@ -51,11 +51,9 @@ public class AuthorizeController {
             user.setToken(token);
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setName(githubUser.getName());
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            // 每次重新登录都会插入一条相同用户但是token不同的数据
-            userMapper.insert(user);
+            // 插入或更新user
+            userService.insertOrUpdate(user);
             // 登录成功，写session保存登录状态
             request.getSession().setAttribute("user",user);
             // 登录成功，写cookie令牌token自动登录
@@ -65,6 +63,17 @@ public class AuthorizeController {
             // 登录失败，重定向到首页重新登录
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 
 }
