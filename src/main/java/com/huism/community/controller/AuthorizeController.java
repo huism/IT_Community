@@ -53,7 +53,7 @@ public class AuthorizeController {
             user.setName(githubUser.getName());
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            user.setAvatarUrl(githubUser.getAvatar_url());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             // 每次重新登录都会插入一条相同用户但是token不同的数据
             userMapper.insert(user);
             // 登录成功，写session保存登录状态
