@@ -11,7 +11,7 @@ body{
     margin-bottom: 20px;
 }
 
-.avator-style{
+.avatar-style{
     width: 38px;
     height: 38px;
 }
@@ -20,4 +20,8 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+
+.profile-section{
+    margin-top: 15px;
 }

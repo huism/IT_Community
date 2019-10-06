@@ -24,7 +24,7 @@
             <div class="media" th:each="question : ${pagination.questions}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded avator-style"
+                        <img class="media-object img-rounded avatar-style"
                              th:src="${question.user.avatarUrl}">
                     </a>
                 </div>
@@ -48,7 +48,7 @@
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
-                    <!-- 上一页 -->l
+                    <!-- 上一页 -->
                     <li th:if="${pagination.showPrevious}">
                         <a th:href="@{/(page=${pagination.currentPage}-1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
