@@ -1,7 +1,6 @@
 package com.huism.community.controller;
 
 import com.huism.community.dto.PaginationDTO;
-import com.huism.community.mapper.UserMapper;
 import com.huism.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class IndexController {
-
-    @Autowired
-    protected UserMapper userMapper;
 
     @Autowired
     private QuestionService questionService;
