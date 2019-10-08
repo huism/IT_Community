@@ -2,6 +2,8 @@ package com.huism.community.service;
 
 import com.huism.community.dto.PaginationDTO;
 import com.huism.community.dto.QuestionDTO;
+import com.huism.community.exception.CustomizeErrorCode;
+import com.huism.community.exception.CustomizeException;
 import com.huism.community.mapper.QuestionMapper;
 import com.huism.community.mapper.UserMapper;
 import com.huism.community.model.Question;
@@ -112,6 +114,10 @@ public class QuestionService {
     // 通过问题id查找问题
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if(question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUSESTION_NOT_FOUND);
+        }
+
         User user = userMapper.selectByPrimaryKey(question.getCreator());
 
         QuestionDTO questionDTO = new QuestionDTO();
@@ -138,7 +144,10 @@ public class QuestionService {
 
             QuestionExample example = new QuestionExample();
             example.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion, example);
+            int updatedNum = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if(updatedNum != 1){
+                throw  new CustomizeException(CustomizeErrorCode.QUSESTION_NOT_FOUND);
+            }
         }
     }
 }
