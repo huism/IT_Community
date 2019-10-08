@@ -4,6 +4,7 @@ import com.huism.community.dto.PaginationDTO;
 import com.huism.community.dto.QuestionDTO;
 import com.huism.community.exception.CustomizeErrorCode;
 import com.huism.community.exception.CustomizeException;
+import com.huism.community.mapper.QuestionExtMapper;
 import com.huism.community.mapper.QuestionMapper;
 import com.huism.community.mapper.UserMapper;
 import com.huism.community.model.Question;
@@ -22,6 +23,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -149,5 +153,12 @@ public class QuestionService {
                 throw  new CustomizeException(CustomizeErrorCode.QUSESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void increaseView(Integer id) {
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.increaseView(question);
     }
 }
