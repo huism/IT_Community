@@ -50,8 +50,10 @@ public class QuestionService {
         Integer offset = size*(page-1);
 
 
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(
-                new QuestionExample(),
+                example,
                 new RowBounds(offset,size));
 
         List<QuestionDTO> questionDTOS = new ArrayList<>();
@@ -94,6 +96,7 @@ public class QuestionService {
 
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(id);
+        example.setOrderByClause("gmt_create desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(
                 example,
                 new RowBounds(offset,size));
@@ -162,5 +165,13 @@ public class QuestionService {
         question.setId(id);
         question.setViewCount(1);
         questionExtMapper.increaseView(question);
+    }
+
+    public Long countQuestions(Long userId) {
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(userId);
+        long count = 0L;
+        count = questionMapper.countByExample(questionExample);
+        return count;
     }
 }

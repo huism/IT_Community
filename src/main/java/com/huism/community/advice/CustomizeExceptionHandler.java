@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import java.io.PrintWriter;
 @ControllerAdvice
 public class CustomizeExceptionHandler {
 
-    @ResponseBody
     @ExceptionHandler(Exception.class)
     ModelAndView handle(HttpServletRequest request, Throwable ex, Model model,
                         HttpServletResponse response) {
@@ -51,7 +49,7 @@ public class CustomizeExceptionHandler {
             if(ex instanceof CustomizeException){
                 model.addAttribute("message",ex.getMessage());
             }else {
-                model.addAttribute("message","服务崩了。。。");
+                model.addAttribute("message",CustomizeErrorCode.SERVICE_ERROR);
             }
 
             return new ModelAndView("error");

@@ -5,9 +5,10 @@ import com.huism.community.exception.CustomizeException;
 import lombok.Data;
 
 @Data
-public class CommentResponseDTO {
+public class CommentResponseDTO<T> {
     private Integer code;
     private String message;
+    private T data;
 
     public static CommentResponseDTO errorOf(Integer code, String message){
         CommentResponseDTO responseDTO = new CommentResponseDTO();
@@ -30,6 +31,14 @@ public class CommentResponseDTO {
         CommentResponseDTO responseDTO = new CommentResponseDTO();
         responseDTO.setCode(200);
         responseDTO.setMessage("请求成功。。。");
+        return responseDTO;
+    }
+
+    public static <T> CommentResponseDTO okOf(T t){
+        CommentResponseDTO responseDTO = new CommentResponseDTO();
+        responseDTO.setCode(200);
+        responseDTO.setMessage("请求成功。。。");
+        responseDTO.setData(t);
         return responseDTO;
     }
 }

@@ -37,6 +37,8 @@ public class ProfileController {
 
             PaginationDTO paginationDTO = questionService.list(user.getId(),page,size);
             model.addAttribute("pagination",paginationDTO);
+            Long countQuestions = questionService.countQuestions(user.getId());
+            model.addAttribute("countQuestions",countQuestions);
         }else if("replies".equals(action)){
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");

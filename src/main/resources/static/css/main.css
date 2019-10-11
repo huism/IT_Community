@@ -39,3 +39,32 @@ body{
 .errorPage{
     padding: 100px;
 }
+
+.menu{
+    color: #999;
+    margin-top: 5px;
+}
+.menu .icon{
+    margin-right: 12px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.menu .active{
+    color: #499ef3;
+}
+.menu .icon:hover{
+    color: #499ef3;
+}
+
+.icon-num{
+    vertical-align: 4px;
+    margin-left: -13px;
+}
+
+.sub-comment{
+    margin-top: 10px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 5px;
+}
