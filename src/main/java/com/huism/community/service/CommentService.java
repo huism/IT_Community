@@ -54,16 +54,19 @@ public class CommentService {
             commentMapper.insert(comment);
 
             // 增加回复的评论数
-            Comment parentComment = new Comment();
-            parentComment.setId(dbComment.getId());
-            parentComment.setCommentCount(1);
-            commentExtMapper.increaseComment(parentComment);
+//            Comment parentComment = new Comment();
+//            parentComment.setId(dbComment.getId());
+//            parentComment.setCommentCount(1);
+//            commentExtMapper.increaseComment(parentComment);
+            dbComment.setCommentCount(1);
+            commentExtMapper.increaseComment(dbComment);
         }else {
             // 回复问题
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question == null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.increaseComment(question);
